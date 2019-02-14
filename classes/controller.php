@@ -40,7 +40,7 @@ class Controller {
 				$view->assign ( 'password', $password );
 				$view->assign ( 'length', $length );
 		}
-		$this->view->setTemplate ( '_main' );
+		$this->view->setTemplate ( 'main' );
 		$this->view->assign ( 'main_title', 'Passwortgenerator' );
 		$this->view->assign ( 'main_footer', '&copy; 2019 Lars Bleckwenn' );
 		$this->view->assign ( 'main_content', $view->loadTemplate () );
