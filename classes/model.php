@@ -8,13 +8,13 @@ class Model {
 	private static $length;
 	private static $settings = array (
 			'noUmlauts' => 1,
-			'copyPasteHelp' => 0,
+			'copyPasteHelp' => 1,
 			'numbers' => 1,
 			'specialChars' => 1,
 			'randomSpecialChars' => '!"#$%&()*+,-.:;=?_§',
 			'fixedSpecialChars' => '#-',
-			'minWordLength' => 3,
-			'maxWordLength' => 10,
+			'minWordLength' => 0,
+			'maxWordLength' => 99,
 			'amountWords' => 3,
 			'minPasswordLength' => 8,
 			'maxPasswordLength' => 32
