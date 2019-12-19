@@ -25,7 +25,14 @@ class Controller {
 		$view = new View ();
 		switch ($this->template) {
 			case 'settings' :
+				if ($_SERVER ['REQUEST_METHOD'] === 'POST') {
+					Model::saveUserSettings ( $this->request );
+				}
+				$settings = Model::getSettings ();
+				$minMaxValues = Model::getMinMaxValues ();
 				$view->setTemplate ( 'settings' );
+				$view->assign ( 'userSettings', $settings );
+				$view->assign ( 'minMaxValues', $minMaxValues );
 				break;
 			case 'words' :
 				$words = Model::getWords ();
@@ -34,11 +41,13 @@ class Controller {
 				break;
 			case 'password' :
 			default :
+				$settings = Model::getSettings ();
 				$password = Model::getPasswort ();
 				$length = Model::getPasswortLength ();
 				$view->setTemplate ( 'password' );
 				$view->assign ( 'password', $password );
 				$view->assign ( 'length', $length );
+				$view->assign ( 'copyPasteHelp', $settings ['copyPasteHelp'] );
 		}
 		$this->view->setTemplate ( 'main' );
 		$this->view->assign ( 'main_title', 'Passwortgenerator' );

@@ -22,8 +22,9 @@ function copyPassword() {
 
 	  /* Copy the text inside the text field */
 	  document.execCommand("copy");
-
+<?php if ($this->_['copyPasteHelp']) {?>
 	  /* Alert the copied text */
 	  alert("Password in die Zwischenablage kopiert. Einfügen mit STRG + V ");
+<?php } ?>
 	}
 </script>
