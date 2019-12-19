@@ -1,173 +1,119 @@
 <div class="container mt-3">
 	<h3>Einstellungen</h3>
 	<hr>
-	<form>
-		<h4>Allgemein</h4>
-		<div class="form-group row">
-			<label for="colFormLabel" class="col-sm-3 col-form-label">Passwörter mit Umlauten</label>
-			<div class="col-sm-9">
-				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"> <label class="custom-control-label" for="customRadioInline1">ja</label>
+	<form action="?page=settings" method="post">
+		<div class="row">
+			<div class="col-12">
+				<h4 class="mt-3">Allgemein</h4>
+				<hr>
+				<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" <?php if( !$this->_ ['userSettings']['noUmlauts'] ) echo 'checked'; ?> id="noUmlauts" name="noUmlauts" value="0">
+					<label class="custom-control-label" for="noUmlauts">Passwörter mit Umlauten</label>
 				</div>
-				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"> <label class="custom-control-label" for="customRadioInline2">nein</label>
+				<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" <?php if( $this->_ ['userSettings']['copyPasteHelp'] &1) echo 'checked'; ?> id="copyPasteHelp" name="copyPasteHelp" value="1">
+					<label class="custom-control-label" for="copyPasteHelp">Hinweis auf die Zwischenablage</label>
 				</div>
 			</div>
 		</div>
-		<div class="form-group row">
-			<label for="colFormLabel" class="col-sm-3 col-form-label">Hinweis auf die Zwischenablage</label>
-			<div class="col-sm-9">
-				<input type="email" class="form-control" id="colFormLabel" placeholder="col-form-label">
+		<div class="row">
+			<div class="col-md-6">
+				<h4 class="mt-3">Wortbestandteile</h4>
+				<hr>
+				<label>Minimale Wortlänge: <span id="minWordLengthText"><?php echo $this->_ ['userSettings']['minWordLength']; ?></span></label>
+				<input type="range" class="custom-range" value="<?php echo $this->_ ['userSettings']['minWordLength']; ?>" min="<?php echo $this->_ ['minMaxValues']['minWordLength']; ?>" max="<?php echo $this->_ ['minMaxValues']['maxWordLength']; ?>" id="minWordLength" name="minWordLength">
+				<label>Maximale Wortlänge: <span id="maxWordLengthText"><?php echo $this->_ ['userSettings']['maxWordLength']; ?></span></label>
+				<input type="range" class="custom-range" value="<?php echo $this->_ ['userSettings']['maxWordLength']; ?>" min="<?php echo $this->_ ['minMaxValues']['minWordLength']; ?>" max="<?php echo $this->_ ['minMaxValues']['maxWordLength']; ?>" id="maxWordLength" name="maxWordLength">
+				<h4 class="mt-3">Passwort</h4>
+				<hr>
+				<label>Anzahl einzelnen Wörter: <span id="amountWordsText"><?php echo $this->_ ['userSettings']['amountWords']; ?></span></label>
+				<input type="range" class="custom-range" value="<?php echo $this->_ ['userSettings']['amountWords']; ?>" min="<?php echo $this->_ ['minMaxValues']['minAmountWords']; ?>" max="<?php echo $this->_ ['minMaxValues']['maxAmountWords']; ?>" id="amountWords" name="amountWords">
+				<label>Minimale Paswortlänge: <span id="minPasswordLengthText"><?php echo $this->_ ['userSettings']['minPasswordLength']; ?></span></label>
+				<input type="range" class="custom-range" value="<?php echo $this->_ ['userSettings']['minPasswordLength']; ?>" min="<?php echo $this->_ ['minMaxValues']['minPasswordLength']; ?>" max="<?php echo $this->_ ['minMaxValues']['maxPasswordLength']; ?>" id="minPasswordLength" name="minPasswordLength">
+				<label>Maximale Paswortlänge: <span id="maxPasswordLengthText"><?php echo $this->_ ['userSettings']['maxPasswordLength']; ?></span></label>
+				<input type="range" class="custom-range" value="<?php echo $this->_ ['userSettings']['maxPasswordLength']; ?>" min="<?php echo $this->_ ['minMaxValues']['minPasswordLength']; ?>" max="<?php echo $this->_ ['minMaxValues']['maxPasswordLength']; ?>" id="maxPasswordLength" name="maxPasswordLength">
+			</div>
+			<div class="col-md-6">
+				<h4 class="mt-3">Zahlen im Passwort</h4>
+				<hr>
+				<div class="form-group">
+					<label>Anzahl der Zeichen ...</label>
+					<div>
+						<div class="custom-controls-stacked">
+							<div class="custom-control custom-radio">
+								<input name="numbers" id="numbers1" class="custom-control-input numbers" <?php if( $this->_ ['userSettings']['numbers'] &1) echo 'checked'; ?> value="1" type="radio" data-help="Time#People-Day4">
+								<label for="numbers1" class="custom-control-label">... des ersten Wort am Ende des Passworts</label>
+							</div>
+						</div>
+						<div class="custom-controls-stacked">
+							<div class="custom-control custom-radio">
+								<input name="numbers" id="numbers2" class="custom-control-input numbers" <?php if( $this->_ ['userSettings']['numbers'] &2) echo 'checked'; ?> value="2" type="radio" data-help="Time4#People-Day">
+								<label for="numbers2" class="custom-control-label">... des ersten Wort nach dem ersten Wort</label>
+							</div>
+						</div>
+						<div class="custom-controls-stacked">
+							<div class="custom-control custom-radio">
+								<input name="numbers" id="numbers3" class="custom-control-input numbers" <?php if( $this->_ ['userSettings']['numbers'] &4) echo 'checked'; ?> value="4" type="radio" data-help="Time4#People6-Day3">
+								<label for="numbers3" class="custom-control-label">... pro Wort nach jedem Wort</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h4>Sonderzeichen im Passwort</h4>
+				<hr>
+				<div class="form-group">
+					<div>
+						<div class="custom-controls-stacked">
+							<div class="custom-control custom-radio">
+								<input name="specialChars" id="specialChars2" class="custom-control-input" <?php if( $this->_ ['userSettings']['specialChars'] &1) echo 'checked'; ?> value="1" type="radio">
+								<label for="specialChars2" class="custom-control-label">Feste Reihenfolge</label>
+								<div class="form-group">
+									<input id="fixedSpecialChars" name="fixedSpecialChars" value="<?php echo htmlspecialchars($this->_ ['userSettings']['fixedSpecialChars']); ?>" class="form-control" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="custom-controls-stacked">
+							<div class="custom-control custom-radio">
+								<input name="specialChars" id="specialChars1" class="custom-control-input" <?php if( $this->_ ['userSettings']['specialChars'] &2) echo 'checked'; ?> value="2" type="radio">
+								<label for="specialChars1" class="custom-control-label">Zufällig</label>
+								<div class="form-group">
+									<input id="randomSpecialChars" name="randomSpecialChars" value="<?php echo htmlspecialchars($this->_ ['userSettings']['randomSpecialChars']); ?>" class="form-control" type="text">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<h4>Wortbestandteile</h4>
-		<div class="form-group row">
-			<label for="colFormLabel" class="col-sm-3 col-form-label">Minimale Wortlänge</label>
-			<div class="col-sm-9">
-				<input type="email" class="form-control" id="colFormLabel" placeholder="col-form-label">
+		<div class="row">
+			<div class="col-md-6">
+				<h4 class="mt-3">Beispielpasswort</h4>
+				<hr>
+				<span id="numbersHelpBlock"></span>
 			</div>
-		</div>
-		<div class="form-group row">
-			<label for="colFormLabel" class="col-sm-3 col-form-label">Maximale Wortlänge</label>
-			<div class="col-sm-9">
-				<input type="email" class="form-control" id="colFormLabel" placeholder="col-form-label">
-			</div>
-		</div>
-		<h4>Passwort</h4>
-		<div class="form-group row">
-			<label for="colFormLabel" class="col-sm-3 col-form-label">Anzahl Wörter</label>
-			<div class="col-sm-9">
-				<input type="email" class="form-control" id="colFormLabel" placeholder="col-form-label">
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="colFormLabel" class="col-sm-3 col-form-label">Minimale Wortlänge</label>
-			<div class="col-sm-9">
-				<input type="email" class="form-control" id="colFormLabel" placeholder="col-form-label">
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="colFormLabel" class="col-sm-3 col-form-label">Maximale Wortlänge</label>
-			<div class="col-sm-9">
-				<input type="email" class="form-control" id="colFormLabel" placeholder="col-form-label">
+			<div class="col-md-6">
+				<div class="form-group">
+					<div class="float-right">
+						<button name="reset" type="reset" class="btn btn-secondary">Zurücksetzen</button>
+						<button name="submit" type="submit" class="btn btn-primary">Speichern</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</form>
-
-	<div class="row">
-		<div class="col-md-6 col-lg-4">
-			<label for="basic-url">Passwörter mit Umlauten</label>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<button class="btn btn-outline-secondary back-button" type="button" data-id="g_language">&lt;</button>
-				</div>
-				<select class="custom-select text-center" name="g_language" id="g_language">
-					<option value="1">ja</option>
-					<option value="0">nein</option>
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary next-button" type="button" data-id="g_language">&gt;</button>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6 col-lg-4">
-			<label for="basic-url">Hinweis auf die Zwischenablage</label>
-			<div class="input-group mb-3 hoverhelp" data-helptext="##AUTO_RELOAD_HELP##">
-				<div class="input-group-prepend">
-					<button class="btn btn-outline-secondary back-button" type="button" data-id="g_reload">&lt;</button>
-				</div>
-				<select class="custom-select text-center" name="g_reload" id="g_reload">
-					<option value="1">ja</option>
-					<option value="0">nein</option>
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary next-button" type="button" data-id="g_reload">&gt;</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-6 col-lg-4">
-			<label for="basic-url">Minimale Wortlänge</label>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<button class="btn btn-outline-secondary back-button" type="button" data-id="g_language">&lt;</button>
-				</div>
-				<select class="custom-select text-center" name="g_language" id="g_language"><?php for($i = 1; $i<18;$i++) {?>
-					<option value="<?php echo($i)?>"><?php echo($i)?></option><?php }?>
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary next-button" type="button" data-id="g_language">&gt;</button>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6 col-lg-4">
-			<label for="basic-url">Maximale Wortlänge</label>
-			<div class="input-group mb-3 hoverhelp" data-helptext="##AUTO_RELOAD_HELP##">
-				<div class="input-group-prepend">
-					<button class="btn btn-outline-secondary back-button" type="button" data-id="g_reload">&lt;</button>
-				</div>
-				<select class="custom-select text-center" name="g_reload" id="g_reload"><?php for($i = 6; $i<18;$i++) {?>
-					<option value="<?php echo($i)?>"><?php echo($i)?></option><?php }?>
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary next-button" type="button" data-id="g_reload">&gt;</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-6 col-lg-4">
-			<label for="basic-url">Minimale Passwortlänge</label>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<button class="btn btn-outline-secondary back-button" type="button" data-id="g_language">&lt;</button>
-				</div>
-				<select class="custom-select text-center" name="g_language" id="g_language"><?php for($i = 1; $i<18;$i++) {?>
-					<option value="<?php echo($i)?>"><?php echo($i)?></option><?php }?>
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary next-button" type="button" data-id="g_language">&gt;</button>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6 col-lg-4">
-			<label for="basic-url">Maximale Passwortlänge</label>
-			<div class="input-group mb-3 hoverhelp" data-helptext="##AUTO_RELOAD_HELP##">
-				<div class="input-group-prepend">
-					<button class="btn btn-outline-secondary back-button" type="button" data-id="g_reload">&lt;</button>
-				</div>
-				<select class="custom-select text-center" name="g_reload" id="g_reload"><?php for($i = 6; $i<18;$i++) {?>
-					<option value="<?php echo($i)?>"><?php echo($i)?></option><?php }?>
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary next-button" type="button" data-id="g_reload">&gt;</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<script>
+		//init
+		$('#numbersHelpBlock').html($('#' + $('.numbers:checked').attr('id')).data('help'));
+		//onChange
+		$('.numbers').change(function(){
+			var radioId = $(this).attr('id');
+			var radioData = $(this).data('help');
+			$('#numbersHelpBlock').html(radioData);
+		})
+		$('input[type=range]').change(function(){
+			var rangeId = $(this).attr('id');
+			var rangeValue = $(this).val();
+			$('#' + rangeId + 'Text').html(rangeValue);
+		})
+	</script>
 </div>
-<script>
-$(".next-button").click(function() {
-	id = ($(this).data("id"));
-	var nextElement = $('#' + id + ' > option:selected').next('option');
-	if (nextElement.length > 0) {
-		$('#' + id + ' > option:selected').removeAttr('selected').next('option').attr('selected', 'selected');
-	}
-})
-$(".back-button").click(function() {
-	id = ($(this).data("id"));
-	var nextElement = $('#' + id + ' > option:selected').prev('option');
-	if (nextElement.length > 0) {
-		$('#' + id + ' > option:selected').removeAttr('selected').prev('option').attr('selected', 'selected');
-	}
-});
-$(".hoverhelp").hover(function() {
-	text = ($(this).data("helptext"));
-	$('#helpRow').val(text);
-}, function () {
-	$('#helpRow').val('');
-})
-</script>
