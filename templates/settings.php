@@ -1,7 +1,7 @@
 <div class="container mt-3">
 	<h3>Einstellungen</h3>
 	<hr>
-	<form action="?page=settings" method="post">
+	<form action="?page=settings" method="post" id="settings">
 		<div class="row">
 			<div class="col-12">
 				<h4 class="mt-3">Allgemein</h4>
@@ -108,12 +108,61 @@
 		$('.numbers').change(function(){
 			var radioId = $(this).attr('id');
 			var radioData = $(this).data('help');
-			$('#numbersHelpBlock').html(radioData);
+			//$('#numbersHelpBlock').html(radioData);
 		})
 		$('input[type=range]').change(function(){
 			var rangeId = $(this).attr('id');
 			var rangeValue = $(this).val();
 			$('#' + rangeId + 'Text').html(rangeValue);
+		})
+		$('#settings').change(function(){
+			function ucFirst(string) {
+				return string[0].toUpperCase() + string.slice(1); 
+	        } 
+			function randomWord(minWordLength, maxWordLength) {
+				maxWordLength++;
+				var randomWordLength = Math.floor(Math.random() * (+maxWordLength - +minWordLength)) + +minWordLength;
+				var randomString = Math.random().toString(36).replace(/[^a-z]+/g, '');
+				randomString += Math.random().toString(36).replace(/[^a-z]+/g, '');
+				randomString += Math.random().toString(36).replace(/[^a-z]+/g, '');
+				randomString = randomString.substr(0, randomWordLength);
+				return ucFirst(randomString);
+			}
+			var amountWords = $('#amountWords').val();
+			var minWordLength = $('#minWordLength').val();
+			var maxWordLength = $('#maxWordLength').val();
+			var numbers = parseInt($('input[name=numbers]:checked').val());
+			var egPassword = '';
+			for ( i=0; i < amountWords; i++) {
+				var word = randomWord(minWordLength, maxWordLength)
+				switch(numbers) {
+					case 1:
+						if (i == 0) {
+							var firstWordLength = word.length;
+						}
+						egPassword += word;
+						if (i == amountWords-1) {
+							egPassword += firstWordLength;
+						}
+						break;
+					case 2: 
+						if (i == 0) {
+							var firstWordLength = word.length;
+							egPassword += word + firstWordLength;
+						} else {
+							egPassword += word;
+						}
+						break;
+					case 4:
+						var wordLength = word.length;
+						egPassword += word + wordLength;
+						break;
+				}
+				if (i < amountWords-1) {
+					egPassword += '#';
+				}
+			}
+			$('#numbersHelpBlock').html(egPassword);			
 		})
 	</script>
 </div>
